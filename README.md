@@ -108,68 +108,123 @@ Common issues and solutions:
 graph TD
     A[Web Browser] -->|Upload Audio| B[Flask Interface]
     B -->|Process| C[Audio Processing]
-    
-    subgraph Processing Pipeline
+
+    subgraph ProcessingPipeline["Processing Pipeline"]
         C -->|Add Noise| D[Noise Generation]
         D -->|Denoise| E[Autoencoder Model]
         E -->|Save| F[File Management]
     end
-    
+
     F -->|Response| B
     B -->|Display Results| A
 
-    subgraph Storage
+    subgraph StorageModule["Storage"]
         G[Original Audio] -.->|Save| F
         H[Noisy Audio] -.->|Save| F
         I[Denoised Audio] -.->|Save| F
     end
+
+    %% Apply classes
+    class A,B interface
+    class C,D,F process
+    class E model
+    class G,H,I storage
+
+    %% Define class styles
+    classDef interface fill:#f7fafc,stroke:#4299e1,color:#4a5568
+    classDef process fill:#4a5568,stroke:#4a5568,color:white
+    classDef storage fill:#e2e8f0,stroke:#4299e1,color:#4a5568
+    classDef model fill:#c3cfe2,stroke:#4299e1,color:black
+
+
 ```
+```mermaid
+graph TD
+    %% Main components
+    User([User])
+    Browser[Web Browser]
+    Flask[Flask Web Server]
+    
+    %% Processing components
+    AudioProcessor[Audio Processing Engine]
+    NoiseGenerator[Noise Generator]
+    
+    %% Models
+    subgraph ModelsModule
+        BasicModel[Basic Autoencoder Model]
+        AdvancedModel[Advanced Autoencoder Model]
+    end
+    
+    %% Storage components
+    subgraph StorageModule
+        UploadsDir[Uploads Directory]
+        OriginalDir[Original Audio Directory]
+        NoisyDir[Noisy Audio Directory]
+        DenoisedDir[Denoised Audio Directory]
+    end
+    
+    %% External assets
+    BackgroundNoise[Background Noise File]
+    
+    %% Routes/Endpoints
+    subgraph RoutesModule
+        IndexRoute["/Route"]
+        DenoiseRoute["/denoise Route"]
+        DownloadRoute["/download Route"]
+    end
+    
+    %% User Flow
+    User -->|Interacts with| Browser
+    Browser -->|Sends requests to| Flask
+    
+    %% Main application flow
+    Flask -->|Serves| IndexRoute
+    IndexRoute -->|Renders| Browser
+    
+    Browser -->|Uploads audio file| DenoiseRoute
+    DenoiseRoute -->|Saves file to| UploadsDir
+    DenoiseRoute -->|Processes audio| AudioProcessor
+    
+    %% Audio processing flow
+    AudioProcessor -->|Applies noise| NoiseGenerator
+    NoiseGenerator -->|Uses| BackgroundNoise
+    
+    AudioProcessor -->|Saves original| OriginalDir
+    AudioProcessor -->|Saves noisy| NoisyDir
+    
+    %% Model selection and processing
+    AudioProcessor -->|Selects model| ModelsModule
+    BasicModel -->|Processes noisy audio| DenoisedDir
+    AdvancedModel -->|Processes noisy audio| DenoisedDir
+    
+    %% Results flow
+    DenoisedDir -->|Provides results| DenoiseRoute
+    DenoiseRoute -->|Renders results| Browser
+    
+    %% Download flow
+    Browser -->|Requests file| DownloadRoute
+    DownloadRoute -->|Retrieves from| StorageModule
+    DownloadRoute -->|Sends file to| Browser
+    Browser -->|Presents to| User
+    
+    %% Styling
+    classDef main fill:#f7fafc,stroke:#4299e1,color:#4a5568
+    classDef process fill:#4a5568,stroke:#4a5568,color:white
+    classDef model fill:#c3cfe2,stroke:#4299e1,color:black
+    classDef storage fill:#e2e8f0,stroke:#4299e1,color:#4a5568
+    classDef route fill:#f7fafc,stroke:#4299e1,color:#4a5568
 
-### System Components and Interactions
+    class User,Browser,Flask main
+    class AudioProcessor,NoiseGenerator process
+    class BasicModel,AdvancedModel model
+    class UploadsDir,OriginalDir,NoisyDir,DenoisedDir,BackgroundNoise storage
+    class IndexRoute,DenoiseRoute,DownloadRoute route
 
-1. **User Interface Layer**
-   - Web interface for audio upload and result visualization
-   - Supports file selection, noise type choice, and model selection
-   - Provides audio playback and download functionality
+    %% Subgraph styling
+    classDef subgraphStyle fill:#f7fafc,stroke:#4299e1,color:#4a5568
+    class ModelsModule,StorageModule,RoutesModule subgraphStyle
 
-2. **Processing Engine**
-   - **Audio Handler**: Manages audio processing workflow
-   - **Noise Generator**: Implements three noise types:
-     - Gaussian noise (random normal distribution)
-     - White noise (uniform distribution)
-     - Background noise (real-world audio overlay)
-   - **Autoencoder Models**: Two neural network variants:
-     - Basic: Standard denoising autoencoder
-     - Advanced: Enhanced architecture for better noise reduction
-
-3. **Storage System**
-   - **Audio Storage**: Manages three audio categories:
-     - Original uploads
-     - Noise-added versions
-     - Denoised results
-   - **Model Storage**: Contains pre-trained neural networks
-
-### User Interaction Flow
-
-1. User uploads audio file through web interface
-2. System validates and processes the upload
-3. Selected noise type is applied to the audio
-4. Chosen autoencoder model processes the noisy audio
-5. Results are saved and made available for:
-   - Immediate playback in browser
-   - Download in WAV format
-   - Comparison between original, noisy, and denoised versions
-
-## 🛠️ Technical Details
-
-- **Framework**: Flask
-- **Deep Learning**: TensorFlow
-- **Audio Processing**: librosa
-- **Container**: Docker
-- **Audio Format**: WAV
-- **Sample Rate**: 44.1 KHz
-- **Models**: Autoencoder Architecture
-
+```
 ## 📝 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
