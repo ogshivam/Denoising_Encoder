@@ -125,6 +125,41 @@ graph TD
     end
 ```
 
+### System Components and Interactions
+
+1. **User Interface Layer**
+   - Web interface for audio upload and result visualization
+   - Supports file selection, noise type choice, and model selection
+   - Provides audio playback and download functionality
+
+2. **Processing Engine**
+   - **Audio Handler**: Manages audio processing workflow
+   - **Noise Generator**: Implements three noise types:
+     - Gaussian noise (random normal distribution)
+     - White noise (uniform distribution)
+     - Background noise (real-world audio overlay)
+   - **Autoencoder Models**: Two neural network variants:
+     - Basic: Standard denoising autoencoder
+     - Advanced: Enhanced architecture for better noise reduction
+
+3. **Storage System**
+   - **Audio Storage**: Manages three audio categories:
+     - Original uploads
+     - Noise-added versions
+     - Denoised results
+   - **Model Storage**: Contains pre-trained neural networks
+
+### User Interaction Flow
+
+1. User uploads audio file through web interface
+2. System validates and processes the upload
+3. Selected noise type is applied to the audio
+4. Chosen autoencoder model processes the noisy audio
+5. Results are saved and made available for:
+   - Immediate playback in browser
+   - Download in WAV format
+   - Comparison between original, noisy, and denoised versions
+
 ## 🛠️ Technical Details
 
 - **Framework**: Flask
@@ -132,7 +167,7 @@ graph TD
 - **Audio Processing**: librosa
 - **Container**: Docker
 - **Audio Format**: WAV
-- **Sample Rate**: 22050 Hz
+- **Sample Rate**: 44.1 KHz
 - **Models**: Autoencoder Architecture
 
 ## 📝 License
