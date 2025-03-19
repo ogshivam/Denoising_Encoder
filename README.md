@@ -104,40 +104,7 @@ Common issues and solutions:
 
 ## 📜 Application Flow
 
-```mermaid
-graph TD
-    A[Web Browser] -->|Upload Audio| B[Flask Interface]
-    B -->|Process| C[Audio Processing]
 
-    subgraph ProcessingPipeline["Processing Pipeline"]
-        C -->|Add Noise| D[Noise Generation]
-        D -->|Denoise| E[Autoencoder Model]
-        E -->|Save| F[File Management]
-    end
-
-    F -->|Response| B
-    B -->|Display Results| A
-
-    subgraph StorageModule["Storage"]
-        G[Original Audio] -.->|Save| F
-        H[Noisy Audio] -.->|Save| F
-        I[Denoised Audio] -.->|Save| F
-    end
-
-    %% Apply classes
-    class A,B interface
-    class C,D,F process
-    class E model
-    class G,H,I storage
-
-    %% Define class styles
-    classDef interface fill:#f7fafc,stroke:#4299e1,color:#4a5568
-    classDef process fill:#4a5568,stroke:#4a5568,color:white
-    classDef storage fill:#e2e8f0,stroke:#4299e1,color:#4a5568
-    classDef model fill:#c3cfe2,stroke:#4299e1,color:black
-
-
-```
 ```mermaid
 graph TD
     %% Main components
@@ -223,6 +190,40 @@ graph TD
     %% Subgraph styling
     classDef subgraphStyle fill:#f7fafc,stroke:#4299e1,color:#4a5568
     class ModelsModule,StorageModule,RoutesModule subgraphStyle
+
+```
+```mermaid
+graph TD
+    A[Web Browser] -->|Upload Audio| B[Flask Interface]
+    B -->|Process| C[Audio Processing]
+
+    subgraph ProcessingPipeline["Processing Pipeline"]
+        C -->|Add Noise| D[Noise Generation]
+        D -->|Denoise| E[Autoencoder Model]
+        E -->|Save| F[File Management]
+    end
+
+    F -->|Response| B
+    B -->|Display Results| A
+
+    subgraph StorageModule["Storage"]
+        G[Original Audio] -.->|Save| F
+        H[Noisy Audio] -.->|Save| F
+        I[Denoised Audio] -.->|Save| F
+    end
+
+    %% Apply classes
+    class A,B interface
+    class C,D,F process
+    class E model
+    class G,H,I storage
+
+    %% Define class styles
+    classDef interface fill:#f7fafc,stroke:#4299e1,color:#4a5568
+    classDef process fill:#4a5568,stroke:#4a5568,color:white
+    classDef storage fill:#e2e8f0,stroke:#4299e1,color:#4a5568
+    classDef model fill:#c3cfe2,stroke:#4299e1,color:black
+
 
 ```
 ## 📝 License
