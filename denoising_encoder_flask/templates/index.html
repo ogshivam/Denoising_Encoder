@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio Denoising Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #4a5568;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        select, input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        select:focus {
+            border-color: #4299e1;
+            outline: none;
+        }
+
+        input[type="file"] {
+            background: #f7fafc;
+            cursor: pointer;
+        }
+
+        input[type="file"]::-webkit-file-upload-button {
+            background: #4299e1;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="file"]::-webkit-file-upload-button:hover {
+            background: #3182ce;
+        }
+
+        button {
+            background: #4299e1;
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #3182ce;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Audio Denoising Tool</h1>
+        <form action="/denoise" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">Upload Audio File (WAV or M4A)</label>
+                <input type="file" id="file" name="file" accept=".wav,.m4a" required>
+            </div>
+            <div class="form-group">
+                <label for="noise">Noise Type</label>
+                <select id="noise" name="noise">
+                    <option value="white">White Noise</option>
+                    <option value="gaussian">Gaussian Noise</option>
+                    <option value="background">Background Noise</option>
+                    <option value="none">No Noise</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="model">Denoising Model</label>
+                <select id="model" name="model">
+                    <option value="basic">Basic Denoising Model</option>
+                    <option value="advanced">Advanced Denoising Model</option>
+                </select>
+            </div>
+            <button type="submit">Process Audio</button>
+        </form>
+    </div>
+</body>
+</html>

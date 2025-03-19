@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Denoising Results</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .audio-section {
+            background: #f8fafc;
+            margin: 25px 0;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .audio-section h2 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        audio {
+            width: 100%;
+            margin: 15px 0;
+            border-radius: 30px;
+        }
+
+        audio::-webkit-media-controls-panel {
+            background: #f1f5f9;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .download-btn {
+            background: #4299e1;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-align: center;
+            flex: 1;
+        }
+
+        .download-btn:hover {
+            background: #3182ce;
+            transform: translateY(-2px);
+        }
+
+        .back-btn {
+            background: #64748b;
+            color: white;
+            padding: 14px 28px;
+            text-decoration: none;
+            border-radius: 10px;
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #475569;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .audio-section {
+                padding: 15px;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Audio Processing Results</h1>
+        
+        <div class="audio-section">
+            <h2>Original Audio</h2>
+            <audio controls>
+                <source src="{{ url_for('download_file', filename=original) }}" type="audio/wav">
+                Your browser does not support the audio element.
+            </audio>
+            <div class="btn-group">
+                <a href="{{ url_for('download_file', filename=original) }}" class="download-btn">Download Original</a>
+            </div>
+        </div>
+
+        <div class="audio-section">
+            <h2>Noisy Audio</h2>
+            <audio controls>
+                <source src="{{ url_for('download_file', filename=noisy) }}" type="audio/wav">
+                Your browser does not support the audio element.
+            </audio>
+            <div class="btn-group">
+                <a href="{{ url_for('download_file', filename=noisy) }}" class="download-btn">Download Noisy</a>
+            </div>
+        </div>
+
+        <div class="audio-section">
+            <h2>Denoised Audio</h2>
+            <audio controls>
+                <source src="{{ url_for('download_file', filename=denoised) }}" type="audio/wav">
+                Your browser does not support the audio element.
+            </audio>
+            <div class="btn-group">
+                <a href="{{ url_for('download_file', filename=denoised) }}" class="download-btn">Download Denoised</a>
+            </div>
+        </div>
+
+        <a href="/" class="back-btn">Process Another Audio</a>
+    </div>
+</body>
+</html>
